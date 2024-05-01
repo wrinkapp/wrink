@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "en_US",
-        url: "https://wrinky.app",
-        title: "Wrinky",
+        url: "https://wrink.app",
+        title: "Wrink",
         images: [
             {
-                url: "https://wrinky.app/images/og-image.png",
-                alt: "Wrinky"
+                url: "https://wrink.app/images/og-image.png",
+                alt: "Wrink"
             }
         ]
     }
