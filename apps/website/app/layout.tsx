@@ -12,7 +12,19 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
     title: "Wrink",
-    description: "Get sh*t done. A new wave of project management. Coming soon."
+    description: "Get sh*t done. A new wave of project management. Coming soon.",
+    openGraph: {
+        type: "website",
+        locale: "en_US",
+        url: "https://wrinky.app",
+        title: "Wrinky",
+        images: [
+            {
+                url: "https://wrinky.app/images/og-image.png",
+                alt: "Wrinky"
+            }
+        ]
+    }
 };
 
 export default function RootLayout({
