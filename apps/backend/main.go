@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
 )
@@ -22,15 +23,25 @@ func init() {
 	log.SetFormatter(&log.JSONFormatter{})
 }
 
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+	return "0.0.0.0:" + port
+
+}
+
 // main function
 func main() {
+	app.Use(logger.New())
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"message": "Hello, World!",
 		})
 	})
 
-	app.Listen(os.Getenv("PORT"))
+	app.Listen(getPort())
 
 	log.Info("Server is live")
 }
