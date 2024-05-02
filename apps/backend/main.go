@@ -31,4 +31,6 @@ func main() {
 	})
 
 	app.Listen(os.Getenv("PORT"))
+
+	log.Info("Server is live")
 }
