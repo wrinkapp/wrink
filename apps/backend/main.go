@@ -13,7 +13,7 @@ var app = fiber.New()
 func init() {
 	// load .env file
 	if err := godotenv.Load(".env"); err != nil {
-		log.Panic("No .env file found")
+		// log.Panic("No .env file found")
 		return
 	}
 
