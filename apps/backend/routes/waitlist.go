@@ -16,12 +16,16 @@ func Waitlist(c *fiber.Ctx) error {
 
 	input := new(request)
 	if err := c.BodyParser(input); err != nil {
-		return c.SendStatus(400)
+		return c.Status(400).JSON(fiber.Map{
+			"error": "Invalid JSON",
+		})
 	}
 
 	invalid := utils.Validate(input)
 	if invalid == "EmailAddress" {
-		return c.SendStatus(400)
+		return c.Status(400).JSON(fiber.Map{
+			"error": "Invalid email address",
+		})
 	}
 
 	// Sanitize email address
@@ -30,7 +34,9 @@ func Waitlist(c *fiber.Ctx) error {
 
 	res := services.Redis.SAdd(context.Background(), "wrink:waitlist", input.EmailAddress).Val()
 	if res == 0 {
-		return c.SendStatus(400)
+		return c.Status(400).JSON(fiber.Map{
+			"error": "Email address already exists",
+		})
 	}
 
 	return c.SendStatus(200)

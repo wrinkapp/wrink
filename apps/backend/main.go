@@ -48,5 +48,8 @@ func main() {
 	app.Post("/waitlist", routes.Waitlist)
 
 	// start server
-	app.Listen(getPort())
+	err := app.Listen(getPort())
+	if err != nil {
+		log.Panic(err)
+	}
 }

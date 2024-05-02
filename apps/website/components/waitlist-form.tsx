@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const formSchema = z.object({
     email: z
@@ -32,11 +33,32 @@ export default function WaitlistForm() {
         }
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
-        toast.success("You've been added to the waitlist!");
-        // reset form
-        form.reset();
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsLoading(true);
+        try {
+            const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/waitlist`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email_address: values.email
+                })
+            });
+
+            if (req.ok) {
+                toast.success("You've been added to the waitlist.");
+                form.reset();
+            } else {
+                const body = await req.json();
+                toast.error(body.error);
+            }
+        } catch (err) {
+            toast.error("An error occurred. Please try again later.");
+        }
+        setIsLoading(false);
     }
 
     return (
@@ -44,7 +66,7 @@ export default function WaitlistForm() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex w-full flex-row items-start justify-center gap-4"
+                    className="flex w-full flex-col items-start justify-center gap-4 md:flex-row"
                 >
                     <FormField
                         control={form.control}
@@ -62,7 +84,9 @@ export default function WaitlistForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Join Waitlist</Button>
+                    <Button type="submit" disabled={isLoading} className="w-full md:w-fit">
+                        Join Waitlist
+                    </Button>
                 </form>
             </Form>
         </div>
