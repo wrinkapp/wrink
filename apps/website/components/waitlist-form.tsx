@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import { z } from "zod";
 import { toast } from "sonner";
 import { useState } from "react";
+import { ArrowRightIcon } from "lucide-react";
 
 const formSchema = z.object({
     email: z
@@ -66,7 +67,7 @@ export default function WaitlistForm() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex w-full flex-col items-start justify-center gap-4 md:flex-row"
+                    className="flex w-full flex-col items-start justify-center gap-2 md:flex-row"
                 >
                     <FormField
                         control={form.control}
@@ -76,7 +77,7 @@ export default function WaitlistForm() {
                                 <FormControl>
                                     <Input
                                         placeholder="Enter your email."
-                                        className="py-4"
+                                        className="text-md py-4"
                                         {...field}
                                     />
                                 </FormControl>
@@ -84,8 +85,9 @@ export default function WaitlistForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" disabled={isLoading} className="w-full md:w-fit">
+                    <Button type="submit" disabled={isLoading} className=" w-full md:w-fit">
                         Join Waitlist
+                        <ArrowRightIcon className="ml-2 h-4 w-4" />
                     </Button>
                 </form>
             </Form>

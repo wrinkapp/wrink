@@ -18,17 +18,19 @@ export default function Navbar() {
             </div>
 
             <div className="hidden flex-row items-center gap-4 sm:flex">
-                {/* <ul className="flex flex-row items-center gap-4">
-                    <li className="text-foreground/80 hover:text-foreground text-md  transition-all duration-200 ease-in-out">
-                        <Link href="/pricing">Developers</Link>
+                <ul className="flex flex-row items-center gap-4">
+                    <li className="text-foreground/80 hover:text-foreground text-sm  transition-all duration-200 ease-in-out">
+                        <Link href="https://github.com/wrinkapp" target="_blank">
+                            GitHub
+                        </Link>
                     </li>
-                    <li className="text-foreground/80 hover:text-foreground text-md  transition-all duration-200 ease-in-out">
+                    {/* <li className="text-foreground/80 hover:text-foreground text-md  transition-all duration-200 ease-in-out">
                         <Link href="/pricing">Blog</Link>
                     </li>
                     <li className="text-foreground/80 hover:text-foreground text-md  transition-all duration-200 ease-in-out">
                         <Link href="/pricing">Pricing</Link>
-                    </li>
-                </ul> */}
+                    </li> */}
+                </ul>
 
                 <Button className="flex h-fit min-h-0 py-[0.4rem]">
                     <Link

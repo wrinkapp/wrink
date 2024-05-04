@@ -1,37 +1,25 @@
+"use client";
+
 import Link from "next/link";
 import {
-    ChevronLeft,
-    ChevronRight,
-    Copy,
-    CreditCard,
-    File,
-    Home,
+    ChevronDownIcon,
+    ChevronUpIcon,
     InboxIcon,
-    LineChart,
-    ListFilter,
     ListTodoIcon,
-    MoreVertical,
-    Package,
-    Package2,
-    PanelLeft,
-    Search,
-    Settings,
-    ShoppingCart,
-    Truck,
-    Users2
+    MessagesSquareIcon,
+    UsersIcon
 } from "lucide-react";
 import { Button } from "./ui/button";
+import SpaceSwitcher from "./space-switcher";
+import { Separator } from "./ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useEffect, useState } from "react";
 
 export default function Sidebar() {
     return (
-        <aside className=" fixed inset-y-0 left-0 z-10 hidden w-[14%] flex-col items-start border-r sm:flex">
-            <nav className="flex w-full flex-col items-center gap-2 px-2 sm:py-4">
-                <SidebarTab
-                    icon={<img src="https://outgone.app/logo.png" alt="Outgone" className="h-5" />}
-                    label="Outgone"
-                    href="/"
-                    isActive={false}
-                />
+        <aside className="inset-y-0 left-0 z-10 hidden flex-col items-start px-2 sm:flex">
+            <div className="flex w-full flex-col items-center gap-2 sm:py-4">
+                <SpaceSwitcher />
                 <div className="mt-4 flex w-full flex-col items-center justify-start gap-1">
                     <SidebarTab
                         icon={<InboxIcon className="w-4" />}
@@ -46,7 +34,47 @@ export default function Sidebar() {
                         isActive={false}
                     />
                 </div>
-            </nav>
+
+                <Separator className="my-4" />
+
+                <div className=" flex w-full flex-col items-center justify-start gap-1">
+                    <SidebarTabWithDropdown
+                        label="Space"
+                        defaultOpen
+                        tabs={[
+                            {
+                                icon: <MessagesSquareIcon className="w-4" />,
+                                label: "Chats",
+                                href: "/",
+                                isActive: false
+                            },
+                            {
+                                icon: <UsersIcon className="w-4" />,
+                                label: "Teams",
+                                href: "/",
+                                isActive: false
+                            }
+                        ]}
+                    />
+                    <SidebarTabWithDropdown
+                        label="My Teams"
+                        tabs={[
+                            {
+                                icon: <InboxIcon className="w-4" />,
+                                label: "Label 1",
+                                href: "/",
+                                isActive: false
+                            },
+                            {
+                                icon: <InboxIcon className="w-4" />,
+                                label: "Label 2",
+                                href: "/",
+                                isActive: false
+                            }
+                        ]}
+                    />
+                </div>
+            </div>
             {/* <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">
                 <Link
                     href="#"
@@ -81,8 +109,64 @@ function SidebarTab({
         >
             <Link href={href}>
                 {icon}
-                <p className="font-bold">{label}</p>
+                <p className="text-sm font-normal">{label}</p>
             </Link>
         </Button>
+    );
+}
+
+function SidebarTabWithDropdown({
+    label,
+    tabs,
+    defaultOpen = false
+}: {
+    label: string;
+    tabs: {
+        icon: React.ReactNode;
+        label: string;
+        href: string;
+        isActive: boolean;
+    }[];
+    defaultOpen?: boolean;
+}) {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+
+    useEffect(() => {
+        console.log(isOpen);
+    }, [isOpen]);
+
+    return (
+        <Collapsible
+            defaultOpen={defaultOpen}
+            className="w-full"
+            onOpenChange={(e: any) => {
+                setIsOpen(e);
+            }}
+        >
+            <CollapsibleTrigger className="w-full">
+                <>
+                    <Button
+                        asChild
+                        size="sm"
+                        variant="ghost"
+                        className="text-muted-foreground flex h-fit w-full justify-between px-2 py-1"
+                    >
+                        <div className="flex w-full justify-between">
+                            <p className="font-normal">{label}</p>
+                            {isOpen ? (
+                                <ChevronUpIcon className="w-3" />
+                            ) : (
+                                <ChevronDownIcon className="w-3" />
+                            )}
+                        </div>
+                    </Button>
+                </>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pl-2">
+                {tabs.map((tab, index) => (
+                    <SidebarTab key={index} {...tab} />
+                ))}
+            </CollapsibleContent>
+        </Collapsible>
     );
 }
