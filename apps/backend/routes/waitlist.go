@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/wrinkapp/wrink/apps/backend/services"
-	"github.com/wrinkapp/wrink/apps/backend/utils"
+	"github.com/wrinkapp/wrink/services"
+	"github.com/wrinkapp/wrink/utils"
 )
 
 func Waitlist(c *fiber.Ctx) error {

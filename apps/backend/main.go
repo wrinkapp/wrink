@@ -8,8 +8,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
-	"github.com/wrinkapp/wrink/apps/backend/routes"
-	"github.com/wrinkapp/wrink/apps/backend/services"
+	"github.com/wrinkapp/wrink/routes"
+	"github.com/wrinkapp/wrink/services"
 )
 
 var app = fiber.New()

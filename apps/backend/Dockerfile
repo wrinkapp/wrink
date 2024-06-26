@@ -1,14 +1,14 @@
-ARG GO_VERSION=1.22.2
+ARG GO_VERSION=1
 FROM golang:${GO_VERSION}-bookworm as builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 COPY . .
-RUN go build -v -o /wrink main.go
+RUN go build -v -o /backend-api .
 
 
 FROM debian:bookworm
 
-COPY --from=builder /wrink /usr/local/bin/
-CMD ["wrink"]
+COPY --from=builder /backend-api /usr/local/bin/
+CMD ["backend-api"]
