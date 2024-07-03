@@ -35,6 +35,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <script
+                    defer
+                    data-domain="wrink.app"
+                    src="https://analytics.kyle.so/js/script.js"
+                ></script>
+            </head>
             <body
                 className={cn(
                     "bg-background min-h-screen font-sans antialiased",
